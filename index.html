@@ -12,11 +12,12 @@
         p {
             font-size: 30px;
             margin-bottom: -30px;
+            font-family: Arial, Helvetica, sans-serif;
         }
     </style>
     <div style="color:white">
         <p id="contador">00:00:00</p>
-        <p id="contadorVeces">Veces visto: 0</p><br><br><br>
+        <p id="contadorVeces">Veces escuchado: 0</p><br><br><br>
         <div>
             <button onclick="iniciarContador()">Iniciar Contador</button>
         </div>
@@ -69,7 +70,7 @@
             // Calcular el número de veces que ha ocurrido el evento cada 3 minutos y 19 segundos
             const tiempoTranscurrido = tiempoTotal / 191.4;
             vecesOcurrido = Math.floor(tiempoTranscurrido);
-            document.getElementById('contadorVeces').textContent = `Veces visto: ${vecesOcurrido}`;
+            document.getElementById('contadorVeces').textContent = `Veces escuchado: ${vecesOcurrido}`;
         }
     </script>
 
