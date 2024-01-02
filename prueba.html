@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Tiempo</title>
+</head>
+
+<body style="background-color: green;">
+    <style>
+        p {
+            font-size: 30px;
+            margin-bottom: -30px;
+        }
+    </style>
+    <div style="color:white">
+        <p id="contador">00:00:00</p>
+        <p id="contadorVeces">Veces visto: 0</p><br><br><br>
+        <div>
+            <button onclick="iniciarContador()">Iniciar Contador</button>
+        </div>
+    </div>
+
+    <script>
+        let tiempoTotal = 0;
+        let vecesOcurrido = 0;
+        let intervalo;
+
+        function iniciarContador() {
+            detenerContador(); // Detener el contador si ya estaba en marcha
+
+            // Permitir que el usuario ingrese el tiempo inicial en horas, minutos y segundos
+            const tiempoInicial = prompt("Ingresa el tiempo inicial en formato HH,MM,SS:", "00,05,00");
+
+            if (tiempoInicial === null) return; // Si se presiona cancelar en el prompt
+
+            // Obtener horas, minutos y segundos desde la entrada del usuario
+            const partesTiempo = tiempoInicial.split(',').map(Number);
+            const horas = partesTiempo[0] || 0;
+            const minutos = partesTiempo[1] || 0;
+            const segundos = partesTiempo[2] || 0;
+
+            // Validar que los valores ingresados sean números positivos
+            if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos) && horas >= 0 && minutos >= 0 && segundos >= 0) {
+                tiempoTotal = horas * 3600 + minutos * 60 + segundos;
+                actualizarContador();
+
+                intervalo = setInterval(function () {
+                    tiempoTotal++;
+                    actualizarContador();
+                }, 1000); // 1000 milisegundos = 1 segundo
+            } else {
+                alert("Por favor, ingresa un valor válido para el tiempo inicial en formato HH,MM,SS.");
+            }
+        }
+
+        function detenerContador() {
+            clearInterval(intervalo);
+        }
+
+        function actualizarContador() {
+            const horas = Math.floor(tiempoTotal / 3600);
+            const minutos = Math.floor((tiempoTotal % 3600) / 60);
+            const segundos = tiempoTotal % 60;
+
+            document.getElementById('contador').textContent = `${horas < 10 ? '0' : ''}${horas}:${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+
+            // Calcular el número de veces que ha ocurrido el evento cada 3 minutos y 19 segundos
+            const tiempoTranscurrido = tiempoTotal / 191.4;
+            vecesOcurrido = Math.floor(tiempoTranscurrido);
+            document.getElementById('contadorVeces').textContent = `Veces ocurrido: ${vecesOcurrido}`;
+        }
+    </script>
+
+</body>
+
+</html>
+
